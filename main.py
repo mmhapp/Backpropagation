@@ -135,7 +135,7 @@ def main():
         model.W2, model.b2 = W2, b2
         model.W3, model.b3 = W3, b3
         plot_decision_boundary(model, X, y, ax, title=f"epoch {ep}")
-    fig.suptitle("Evolution of the decision boundary during training", fontsize=14, y=1.01)
+    # fig.suptitle("Evolution of the decision boundary during training", fontsize=14, y=1.01)
     fig.tight_layout()
     fig.savefig("decision_boundaries.png", dpi=150, bbox_inches="tight")
     print("Saved decision_boundaries.png")

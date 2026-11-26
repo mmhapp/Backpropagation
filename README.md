@@ -1,6 +1,6 @@
 # Backpropagation
 
-A small multi-layer perceptron (MLP) implemented from scratch with pure NumPy. Forward pass, backpropagation (chain rule) and weight updates are written by hand. Includes gradient checking and a visualisation of how the decision boundary evolves during training.
+A small multi-layer perceptron (MLP) implemented from scratch with NumPy. Forward pass, backpropagation (gradient of the loss function and the chain rule) and weight updates. The picture below shows visualisation of how the decision boundary evolves during training.
 
 ![Decision boundary evolution](decision_boundaries.png)
 
