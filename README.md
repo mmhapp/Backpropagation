@@ -1,10 +1,12 @@
-# Backpropagation from Scratch
+# Backpropagation
 
 A small multi-layer perceptron (MLP) implemented from scratch with pure NumPy. Forward pass, backpropagation (chain rule) and weight updates are written by hand. Includes gradient checking and a visualisation of how the decision boundary evolves during training.
 
 ![Decision boundary evolution](decision_boundaries.png)
 
-## How this relates to real AI models
+---
+
+## Relation to AI
 
 Backpropagation is the algorithm that makes neural networks trainable.  
 It is used to train **every** modern architecture:
