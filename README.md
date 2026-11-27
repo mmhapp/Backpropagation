@@ -1,9 +1,10 @@
 # Backpropagation
 
-A small multi-layer perceptron (MLP) implemented from scratch with NumPy. Includes forward pass, backpropagation – gradient of the loss and the chain rule – and weight updates. The picture below shows how the decision boundary evolves during training. It is random at epoch 0, starts to separate the two moons after 50 epochs and is smooth by epoch 200. A ReLU network can learn a non-linear boundary that a single linear classifier could never produce.
+A small multi-layer perceptron (MLP) implemented from scratch with NumPy with forward pass, backpropagation – gradient of the loss and the chain rule – and weight updates. The picture below shows how the decision boundary evolves during training. It is random at epoch 0, starts to separate the two moons after 50 epochs and is smooth by epoch 200. A ReLU network can learn a non-linear boundary that a single linear classifier could never produce.
 
 <div align="center">
   <img src="decision_boundaries.png" alt="decision_boundaries" width="50%">
+
   <sub>Figure 1: xxx.</sub>
 </div>
 
