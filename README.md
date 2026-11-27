@@ -1,14 +1,15 @@
 # Backpropagation
 
-A small multi-layer perceptron (MLP) implemented from scratch with NumPy: forward pass, backpropagation as gradient of the loss and the chain rule, and weight updates. The picture below shows how the decision boundary evolves during training. It is random at epoch 0, starts to separate the two moons after roughly 20–50 epochs and is smooth by epoch 200. A ReLU network can learn a non-linear boundary that a single linear classifier could never produce.
+A small multi-layer perceptron (MLP) implemented from scratch with NumPy. Includes forward pass, backpropagation – gradient of the loss and the chain rule – and weight updates. The picture below shows how the decision boundary evolves during training. It is random at epoch 0, starts to separate the two moons after 50 epochs and is smooth by epoch 200. A ReLU network can learn a non-linear boundary that a single linear classifier could never produce.
 
-![Decision boundary evolution](decision_boundaries.png)
+<img src="decision_boundaries.png" alt="decision_boundaries" width="50%">
+<sub>Figure 1: Optimointimenetelmien häviökäyrät (log-asteikko).</sub>
 
 ---
 
 ## Relation to Artificial Intelligence
 
-Backpropagation is the algorithm that makes neural networks trainable, from CNNs and transformers to diffusion models and reinforcement-learning models. When one calls `loss.backward()` in PyTorch, the framework executes the same chain-rule calculations that are derived by hand in this project, just for much deeper graphs and with automatic differentiation.
+Backpropagation is the algorithm that makes neural networks trainable – from neural networks and transformers to diffusion models and reinforcement learning models. When one calls `loss.backward()` in PyTorch, the framework executes the same chain-rule calculations that are derived by hand in this project, just for much deeper graphs and with automatic differentiation.
 
 ## Mathematics
 
@@ -94,12 +95,14 @@ python main.py
 
 ## Project
 
+```
 ├── data/               # Benchmark datasets
 ├── Results/            # Output directory for weights and predictions
 ├── fm.py               # Main execution script
 ├── fmloop.py           # Automated experiment runner
 ├── settings.py         # Hyperparameter configurations
 └── statistics.pdf      # Visualisation and analysis
+```
 
 ## References
 
