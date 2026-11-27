@@ -1,6 +1,6 @@
 # Backpropagation
 
-A small multi-layer perceptron (MLP) implemented from scratch with NumPy. Forward pass, backpropagation (gradient of the loss function and the chain rule) and weight updates. The picture below shows visualisation of how the decision boundary evolves during training. At the beginning the decision boundary is essentially random (epoch 0). After roughly 20–50 epochs the network starts to separate the two moons, and by epoch 200 the boundary is already smooth. A ReLU network can learn a non-linear boundary that a single linear classifier could never produce.
+A small multi-layer perceptron (MLP) implemented from scratch with NumPy: forward pass, backpropagation as gradient of the loss and the chain rule, and weight updates. The picture below shows how the decision boundary evolves during training. It is random at epoch 0, starts to separate the two moons after roughly 20–50 epochs and is smooth by epoch 200. A ReLU network can learn a non-linear boundary that a single linear classifier could never produce.
 
 ![Decision boundary evolution](decision_boundaries.png)
 
@@ -8,7 +8,7 @@ A small multi-layer perceptron (MLP) implemented from scratch with NumPy. Forwar
 
 ## Relation to Artificial Intelligence
 
-Backpropagation is the algorithm that makes neural networks trainable. It is used to train basically every modern architecture, e.g. Convolutional Neural Networks (CNNs) for image recognition, Transformers in large language models (the gradients flow through attention and MLP blocks), Diffusion models (the noise-prediction network is trained with backprop), and Reinforcement-learning models. When one calls `loss.backward()` in PyTorch, the framework is executing exactly the same chain-rule calculations that are derived by hand in this project — just for much deeper graphs and with automatic differentiation.
+Backpropagation is the algorithm that makes neural networks trainable, from CNNs and transformers to diffusion models and reinforcement-learning models. When one calls `loss.backward()` in PyTorch, the framework executes the same chain-rule calculations that are derived by hand in this project, just for much deeper graphs and with automatic differentiation.
 
 ## Mathematics
 
@@ -91,6 +91,15 @@ Relative error is typically below $10^{-6}$. If it grows, there is a bug somewhe
 pip install -r requirements.txt
 python main.py
 ```
+
+## Project
+
+├── data/               # Benchmark datasets
+├── Results/            # Output directory for weights and predictions
+├── fm.py               # Main execution script
+├── fmloop.py           # Automated experiment runner
+├── settings.py         # Hyperparameter configurations
+└── statistics.pdf      # Visualisation and analysis
 
 ## References
 
