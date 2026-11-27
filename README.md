@@ -33,7 +33,7 @@ The script:
 
 ## Mathematics
 
-1. Network architecture
+<ins>Network architecture</ins>
 
 The network maps the input to a probability as
 
