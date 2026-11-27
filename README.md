@@ -8,14 +8,7 @@ A small multi-layer perceptron (MLP) implemented from scratch with NumPy. Forwar
 
 ## Relation to Artificial Intelligence
 
-Backpropagation is the algorithm that makes neural networks trainable. It is used to train basically every modern architecture, e.g. Convolutional Neural Networks (CNNs) for image recognition, Transformers in large language models (the gradients flow through attention and MLP blocks), Diffusion models (the noise-prediction network is trained with backprop), and Reinforcement-learning models. When one calls `loss.backward()` in, PyTorch or JAX code, the framework is executing exactly the same chain-rule calculations that are derived by hand in this project — just for much deeper graphs and with automatic differentiation.
-
-## Running
-
-```bash
-pip install -r requirements.txt
-python main.py
-```
+Backpropagation is the algorithm that makes neural networks trainable. It is used to train basically every modern architecture, e.g. Convolutional Neural Networks (CNNs) for image recognition, Transformers in large language models (the gradients flow through attention and MLP blocks), Diffusion models (the noise-prediction network is trained with backprop), and Reinforcement-learning models. When one calls `loss.backward()` in PyTorch, the framework is executing exactly the same chain-rule calculations that are derived by hand in this project — just for much deeper graphs and with automatic differentiation.
 
 ## Mathematics
 
@@ -86,11 +79,18 @@ $W \leftarrow W - \eta\,dW$.
 
 <ins>Gradient checking</ins>
 
-`main.py` compares the analytic gradient with the numerical approximation
+Code also compares the analytic gradient with the numerical approximation
 
 $\frac{\partial L}{\partial \theta_i} \approx \frac{L(\theta + h e_i) - L(\theta - h e_i)}{2h}$.
 
 Relative error is typically below $10^{-6}$. If it grows, there is a bug somewhere.
+
+## Running
+
+```bash
+pip install -r requirements.txt
+python main.py
+```
 
 ## References
 
