@@ -1,12 +1,12 @@
 # Backpropagation
 
-A small multi-layer perceptron (MLP) implemented from scratch with NumPy. Forward pass, backpropagation (gradient of the loss function and the chain rule) and weight updates. The picture below shows visualisation of how the decision boundary evolves during training.
+A small multi-layer perceptron (MLP) implemented from scratch with NumPy. Forward pass, backpropagation (gradient of the loss function and the chain rule) and weight updates. The picture below shows visualisation of how the decision boundary evolves during training. At the beginning the decision boundary is essentially random (epoch 0). After roughly 20–50 epochs the network starts to separate the two moons, and by epoch 200 the boundary is already smooth. A ReLU network can learn a non-linear boundary that a single linear classifier could never produce.
 
 ![Decision boundary evolution](decision_boundaries.png)
 
 ---
 
-## Relation to AI
+## Relation to Artificial Intelligence
 
 Backpropagation is the algorithm that makes neural networks trainable.  
 It is used to train **every** modern architecture:
@@ -32,7 +32,9 @@ The script:
 3. Trains the network for 400 epochs
 4. Saves `decision_boundaries.png` (boundary at epochs 0, 20, 50, 100, 200, 400) and `loss_curve.png`
 
-## Network architecture
+## Mathematics
+
+### Network architecture
 
 ```
 x ∈ ℝ²  →  Linear → ReLU  →  Linear → ReLU  →  Linear → sigmoid  →  ŷ ∈ (0,1)
@@ -43,14 +45,14 @@ Loss is binary cross-entropy:
 
 $$L = -\frac1N\sum_{i=1}^N \Bigl[ y_i\log\hat y_i + (1-y_i)\log(1-\hat y_i) \Bigr]$$
 
-## Mathematics – chain rule by hand
+### Chain rule by hand
 
 Denote the layers from bottom to top. Forward pass:
 
 $$
 \begin{aligned}
-z^{(1)} &= X W^{(1)} + b^{(1)}, & a^{(1)} &= \operatorname{ReLU}(z^{(1)}) \\
-z^{(2)} &= a^{(1)} W^{(2)} + b^{(2)}, & a^{(2)} &= \operatorname{ReLU}(z^{(2)}) \\
+z^{(1)}\&=XW^{(1)}+b^{(1)}{,}\&a^{(1)}\&=ReLU(z^{(1)}) \\
+z^{(2)}\&=a^{(1)}W^{(2)}+b^{(2)}{,}\&a^{(2)}\&=ReLU(z^{(2)}) \\
 z^{(3)} &= a^{(2)} W^{(3)} + b^{(3)}, & \hat y = a^{(3)} &= \sigma(z^{(3)})
 \end{aligned}
 $$
@@ -110,7 +112,7 @@ The first hidden layer is treated identically (replace $a^{(1)}$ by the input $X
 
 Weights are updated by gradient descent: $W \leftarrow W - \eta\,dW$.
 
-## Gradient checking
+### Gradient checking
 
 `main.py` compares the analytic gradient with the numerical approximation
 
@@ -119,10 +121,6 @@ $$
 $$
 
 Relative error is typically below $10^{-6}$. If it grows, there is a bug somewhere.
-
-## What the figure shows
-
-At the beginning the decision boundary is essentially random (epoch 0). After roughly 20–50 epochs the network starts to separate the two moons, and by epoch 200 the boundary is already smooth. A ReLU network can learn a non-linear boundary that a single linear classifier could never produce.
 
 ## References
 
