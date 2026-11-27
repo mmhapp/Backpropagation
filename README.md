@@ -12,7 +12,7 @@ A small multi-layer perceptron (MLP) implemented from scratch with NumPy with fo
 
 ## Relation to Artificial Intelligence
 
-Backpropagation is the algorithm that makes neural networks trainable – from neural networks and transformers to diffusion models and reinforcement learning models. When one calls `loss.backward()` in PyTorch, the framework executes the same chain-rule calculations that are derived by hand in this project, just for much deeper graphs and with automatic differentiation.
+Backpropagation is the algorithm that makes neural networks trainable – from neural networks and transformers to diffusion and reinforcement learning models. When one calls `loss.backward()` in PyTorch, the framework executes the same chain-rule calculations, just for much deeper graphs and with automatic differentiation.
 
 ## Mathematics
 
