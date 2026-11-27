@@ -8,14 +8,7 @@ A small multi-layer perceptron (MLP) implemented from scratch with NumPy. Forwar
 
 ## Relation to Artificial Intelligence
 
-Backpropagation is the algorithm that makes neural networks trainable. It is used to train **every** modern architecture:
-
-- Convolutional Neural Networks (CNNs) for image recognition
-- Transformers / large language models (the gradients flow through attention and MLP blocks)
-- Diffusion models (the noise-prediction network is trained with backprop)
-- Reinforcement-learning policies, speech models, etc.
-
-When you call `loss.backward()` in PyTorch or JAX, the framework is executing exactly the same chain-rule calculations that are derived by hand in this project — just for much deeper graphs and with automatic differentiation.
+Backpropagation is the algorithm that makes neural networks trainable. It is used to train basically every modern architecture, e.g. Convolutional Neural Networks (CNNs) for image recognition, Transformers in large language models (the gradients flow through attention and MLP blocks), Diffusion models (the noise-prediction network is trained with backprop), and Reinforcement-learning models. When one calls `loss.backward()` in, PyTorch or JAX code, the framework is executing exactly the same chain-rule calculations that are derived by hand in this project — just for much deeper graphs and with automatic differentiation.
 
 ## Running
 
@@ -23,13 +16,6 @@ When you call `loss.backward()` in PyTorch or JAX, the framework is executing ex
 pip install -r requirements.txt
 python main.py
 ```
-
-The script:
-
-1. Generates 2-D “two moons” data
-2. Checks the analytic gradient against numerical central differences
-3. Trains the network for 400 epochs
-4. Saves `decision_boundaries.png` (boundary at epochs 0, 20, 50, 100, 200, 400) and `loss_curve.png`
 
 ## Mathematics
 
@@ -45,7 +31,7 @@ The loss is binary cross-entropy
 
 $L = -\frac1N\sum_{i=1}^N \bigl[\, y_i\log\hat y_i + (1-y_i)\log(1-\hat y_i)\,\bigr]$.
 
-2. Forward pass
+<ins>Forward pass</ins>
 
 Denote the layers from bottom to top. The forward pass is
 
@@ -55,7 +41,7 @@ $z^{(2)} = a^{(1)}W^{(2)} + b^{(2)},\qquad a^{(2)} = \mathrm{ReLU}(z^{(2)})$
 
 $z^{(3)} = a^{(2)}W^{(3)} + b^{(3)},\qquad \hat y = a^{(3)} = \sigma(z^{(3)})$.
 
-3. Output layer (sigmoid + BCE)
+<ins>Output layer (sigmoid + BCE)</ins>
 
 The combination of sigmoid and binary cross-entropy simplifies nicely as
 
@@ -69,7 +55,7 @@ and the error is sent backwards as
 
 $\frac{\partial L}{\partial a^{(2)}} = \frac{\partial L}{\partial z^{(3)}}\,(W^{(3)})^\top$.
 
-4. Hidden layer (ReLU)
+<ins>Hidden layer (ReLU)</ins>
 
 The derivative of ReLU is the indicator function
 
@@ -85,7 +71,7 @@ $\frac{\partial L}{\partial W^{(2)}} = (a^{(1)})^\top \frac{\partial L}{\partial
 
 The first hidden layer is treated identically (replace $a^{(1)}$ by the input $X$).
 
-5. Summary – one backward pass
+<ins>Summary – one backward pass</ins>
 
 1. $\delta^{(3)} = (\hat y - y)/N$
 2. $dW^{(3)} = (a^{(2)})^\top\delta^{(3)}$, $\quad db^{(3)} = \sum\delta^{(3)}$
@@ -98,7 +84,7 @@ Weights are updated by gradient descent as
 
 $W \leftarrow W - \eta\,dW$.
 
-6. Gradient checking
+<ins>Gradient checking</ins>
 
 `main.py` compares the analytic gradient with the numerical approximation
 
@@ -108,6 +94,4 @@ Relative error is typically below $10^{-6}$. If it grows, there is a bug somewhe
 
 ## References
 
-- Rumelhart, Hinton & Williams (1986), *Learning representations by back-propagating errors*
-- Goodfellow, Bengio & Courville, *Deep Learning*, Chapter 6.5
-- CS231n, Stanford – Backpropagation notes
+Goodfellow, I., Bengio, Y. & Courville, A. (2016). “Back-Propagation and Other Differentiation Algorithms” [Chapter 6.5]. Deep Learning. MIT Press. Available at: https://www.deeplearningbook.org/contents/mlp.html
