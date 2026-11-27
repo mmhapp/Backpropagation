@@ -8,8 +8,7 @@ A small multi-layer perceptron (MLP) implemented from scratch with NumPy. Forwar
 
 ## Relation to Artificial Intelligence
 
-Backpropagation is the algorithm that makes neural networks trainable.  
-It is used to train **every** modern architecture:
+Backpropagation is the algorithm that makes neural networks trainable. It is used to train **every** modern architecture:
 
 - Convolutional Neural Networks (CNNs) for image recognition
 - Transformers / large language models (the gradients flow through attention and MLP blocks)
@@ -34,91 +33,76 @@ The script:
 
 ## Mathematics
 
-### Network architecture
+1. Network architecture
 
-```
-x ∈ ℝ²  →  Linear → ReLU  →  Linear → ReLU  →  Linear → sigmoid  →  ŷ ∈ (0,1)
-         W1,b1          W2,b2          W3,b3
-```
+The network maps the input to a probability as
 
-Loss is binary cross-entropy:
+$x \in \mathbb{R}^2 \;\to\; \text{Linear} \to \text{ReLU} \;\to\; \text{Linear} \to \text{ReLU} \;\to\; \text{Linear} \to \sigma \;\to\; \hat y \in (0,1)$.
 
-$$L = -\frac1N\sum_{i=1}^N \Bigl[ y_i\log\hat y_i + (1-y_i)\log(1-\hat y_i) \Bigr]$$
+The parameters of the three linear layers are $W^{(1)}, b^{(1)}$, $W^{(2)}, b^{(2)}$ and $W^{(3)}, b^{(3)}$.
 
-### Chain rule by hand
+The loss is binary cross-entropy
 
-Denote the layers from bottom to top. Forward pass:
+$L = -\frac1N\sum_{i=1}^N \bigl[\, y_i\log\hat y_i + (1-y_i)\log(1-\hat y_i)\,\bigr]$.
 
-$$
-\begin{aligned}
-z^{(1)}\&=XW^{(1)}+b^{(1)}{,}\&a^{(1)}\&=ReLU(z^{(1)}) \\
-z^{(2)}\&=a^{(1)}W^{(2)}+b^{(2)}{,}\&a^{(2)}\&=ReLU(z^{(2)}) \\
-z^{(3)} &= a^{(2)} W^{(3)} + b^{(3)}, & \hat y = a^{(3)} &= \sigma(z^{(3)})
-\end{aligned}
-$$
+2. Forward pass
 
-### Output layer (sigmoid + BCE)
+Denote the layers from bottom to top. The forward pass is
 
-The combination of sigmoid and binary cross-entropy simplifies nicely:
+$z^{(1)} = XW^{(1)} + b^{(1)},\qquad a^{(1)} = \mathrm{ReLU}(z^{(1)})$
 
-$$
-\frac{\partial L}{\partial z^{(3)}} = \frac1N\,(\hat y - y)
-$$
+$z^{(2)} = a^{(1)}W^{(2)} + b^{(2)},\qquad a^{(2)} = \mathrm{ReLU}(z^{(2)})$
 
-From this we obtain the weight gradients:
+$z^{(3)} = a^{(2)}W^{(3)} + b^{(3)},\qquad \hat y = a^{(3)} = \sigma(z^{(3)})$.
 
-$$
-\frac{\partial L}{\partial W^{(3)}} = (a^{(2)})^\top \frac{\partial L}{\partial z^{(3)}}, \qquad
-\frac{\partial L}{\partial b^{(3)}} = \sum_i \frac{\partial L}{\partial z^{(3)}_i}
-$$
+3. Output layer (sigmoid + BCE)
 
-and the error is sent backwards:
+The combination of sigmoid and binary cross-entropy simplifies nicely as
 
-$$
-\frac{\partial L}{\partial a^{(2)}} = \frac{\partial L}{\partial z^{(3)}} (W^{(3)})^\top
-$$
+$\frac{\partial L}{\partial z^{(3)}} = \frac1N\,(\hat y - y)$.
 
-### Hidden layer (ReLU)
+From this we obtain the weight gradients
 
-The derivative of ReLU is the indicator function:
+$\frac{\partial L}{\partial W^{(3)}} = (a^{(2)})^\top \frac{\partial L}{\partial z^{(3)}},\qquad \frac{\partial L}{\partial b^{(3)}} = \sum_i \frac{\partial L}{\partial z^{(3)}_i}$
 
-$$
-\frac{\partial a^{(2)}}{\partial z^{(2)}} = \mathbf{1}_{z^{(2)} > 0}
-$$
+and the error is sent backwards as
+
+$\frac{\partial L}{\partial a^{(2)}} = \frac{\partial L}{\partial z^{(3)}}\,(W^{(3)})^\top$.
+
+4. Hidden layer (ReLU)
+
+The derivative of ReLU is the indicator function
+
+$\frac{\partial a^{(2)}}{\partial z^{(2)}} = \mathbf{1}_{z^{(2)} > 0}$.
 
 Therefore
 
-$$
-\frac{\partial L}{\partial z^{(2)}} = \frac{\partial L}{\partial a^{(2)}} \odot \mathbf{1}_{z^{(2)} > 0}
-$$
+$\frac{\partial L}{\partial z^{(2)}} = \frac{\partial L}{\partial a^{(2)}} \odot \mathbf{1}_{z^{(2)} > 0}$
 
-and, as above:
+and, as above,
 
-$$
-\frac{\partial L}{\partial W^{(2)}} = (a^{(1)})^\top \frac{\partial L}{\partial z^{(2)}}, \qquad
-\frac{\partial L}{\partial a^{(1)}} = \frac{\partial L}{\partial z^{(2)}} (W^{(2)})^\top
-$$
+$\frac{\partial L}{\partial W^{(2)}} = (a^{(1)})^\top \frac{\partial L}{\partial z^{(2)}},\qquad \frac{\partial L}{\partial a^{(1)}} = \frac{\partial L}{\partial z^{(2)}}\,(W^{(2)})^\top$.
 
 The first hidden layer is treated identically (replace $a^{(1)}$ by the input $X$).
 
-### Summary – one backward pass
+5. Summary – one backward pass
 
 1. $\delta^{(3)} = (\hat y - y)/N$
-2. $dW^{(3)} = (a^{(2)})^\top\delta^{(3)}$, $db^{(3)}=\sum\delta^{(3)}$
-3. $\delta^{(2)} = (\delta^{(3)}(W^{(3)})^\top)\odot\mathbf{1}_{z^{(2)}>0}$
-4. $dW^{(2)} = (a^{(1)})^\top\delta^{(2)}$, $db^{(2)}=\sum\delta^{(2)}$
-5. $\delta^{(1)} = (\delta^{(2)}(W^{(2)})^\top)\odot\mathbf{1}_{z^{(1)}>0}$
-6. $dW^{(1)} = X^\top\delta^{(1)}$, $db^{(1)}=\sum\delta^{(1)}$
+2. $dW^{(3)} = (a^{(2)})^\top\delta^{(3)}$, $\quad db^{(3)} = \sum\delta^{(3)}$
+3. $\delta^{(2)} = \bigl(\delta^{(3)}(W^{(3)})^\top\bigr)\odot\mathbf{1}_{z^{(2)}>0}$
+4. $dW^{(2)} = (a^{(1)})^\top\delta^{(2)}$, $\quad db^{(2)} = \sum\delta^{(2)}$
+5. $\delta^{(1)} = \bigl(\delta^{(2)}(W^{(2)})^\top\bigr)\odot\mathbf{1}_{z^{(1)}>0}$
+6. $dW^{(1)} = X^\top\delta^{(1)}$, $\quad db^{(1)} = \sum\delta^{(1)}$
 
-Weights are updated by gradient descent: $W \leftarrow W - \eta\,dW$.
+Weights are updated by gradient descent as
 
-### Gradient checking
+$W \leftarrow W - \eta\,dW$.
+
+6. Gradient checking
 
 `main.py` compares the analytic gradient with the numerical approximation
 
-$$
-\frac{\partial L}{\partial \theta_i} \approx \frac{L(\theta + h e_i) - L(\theta - h e_i)}{2h}
-$$
+$\frac{\partial L}{\partial \theta_i} \approx \frac{L(\theta + h e_i) - L(\theta - h e_i)}{2h}$.
 
 Relative error is typically below $10^{-6}$. If it grows, there is a bug somewhere.
 
